@@ -1,5 +1,3 @@
-import os.path
-import os
 import requests
 from flask import Flask,escape,request,Response,render_template, redirect,url_for
 import todo_app.data.session_items as session

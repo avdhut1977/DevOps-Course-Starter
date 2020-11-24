@@ -3,20 +3,14 @@ import os
 import requests
 from flask import Flask,escape,request,Response,render_template, redirect,url_for
 import todo_app.data.session_items as session
-
-#from todo_app.flask_config import Config
-#from todo_app.data import session_items as session
-
-#app = Flask(__name__)
-#app.config.from_object(Config)
-
-# Set environment variables
-os.environ['TRELLO_KEY'] = '9759d799d29e27a3800892eca3e3852f'
-os.environ['TRELLO_TOKEN'] = '937305947b1583b2fe563782a97f4e689fdf29782e56e0cc243f3ff6f0aaf97f'
+from todo_app.flask_config import Config
 
 app = Flask(__name__)
-key = os.getenv("TRELLO_KEY")
-token = os.getenv("TRELLO_TOKEN")
+app.config.from_object(Config)
+
+key = Config.TRELLO_KEY
+token = Config.TRELLO_TOKEN
+
 headers = {
    "Accept": "application/json"
 }
@@ -198,7 +192,7 @@ def view_board():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    #items = session.get_items()
+
     url = "https://api.trello.com/1/members/me/boards"
     queryparams = {"key": key, "token": token}
     urlResponse = requests.request("GET", url, params=queryparams)

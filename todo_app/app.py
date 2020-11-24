@@ -1,6 +1,5 @@
 import requests
-from flask import Flask,escape,request,Response,render_template, redirect,url_for
-import todo_app.data.session_items as session
+from flask import Flask,request,render_template, redirect,url_for
 from todo_app.flask_config import Config
 
 app = Flask(__name__)

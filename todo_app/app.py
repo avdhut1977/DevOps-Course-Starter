@@ -15,34 +15,34 @@ headers = {
 def get_tasks(s_id):
     url = f"https://api.trello.com/1/lists/{s_id}/cards"
     queryparams = {"key": key, "token": token}
-    jsonResponse = requests.request("GET", url, params=queryparams).json()
-    responseString = [] 
-    for jsonRecord in jsonResponse:
-        responseString.append({'id': jsonRecord['id'], 'name': jsonRecord['name']}) 
-    return responseString
+    json_response = requests.request("GET", url, params=queryparams).json()
+    response_string = [] 
+    for json_record in json_response:
+        response_string.append({'id': json_record['id'], 'name': json_record['name']}) 
+    return response_string
 
 
 def get_board(id):
     url = f"https://api.trello.com/1/boards/{id}"
     queryparams = {"key": key, "token": token}
-    jsonResponse = requests.request("GET", url, params=queryparams).json()
-    board = {"id": id, "name": jsonResponse['name'] }    
+    json_response = requests.request("GET", url, params=queryparams).json()
+    board = {"id": id, "name": json_response['name'] }    
     return board
 
 def get_statuses(id):
     url = f"https://api.trello.com/1/boards/{id}/lists"
     queryparams = {"key": key, "token": token}
-    jsonResponse = requests.request("GET", url, params=queryparams).json()  
+    json_response = requests.request("GET", url, params=queryparams).json()  
     data = [] 
-    for jsonRecord in jsonResponse:
-        data.append({'id': jsonRecord['id'], 'name': jsonRecord['name']}) 
+    for json_record in json_response:
+        data.append({'id': json_record['id'], 'name': json_record['name']}) 
     return data
 
 def get_task(id):
     url = f"https://api.trello.com/1/cards/{id}"
     queryparams = {"key": key, "token": token}
-    jsonResponse = requests.request("GET", url, params=queryparams).json()  
-    task = {'id': jsonResponse['id'], 'name': jsonResponse['name'], 'status_id': jsonResponse['idList'], 'board_id':jsonResponse['idBoard'] }
+    json_response = requests.request("GET", url, params=queryparams).json()  
+    task = {'id': json_response['id'], 'name': json_response['name'], 'status_id': json_response['idList'], 'board_id':json_response['idBoard'] }
     return task
 
 def delete_task_id(id):
@@ -51,39 +51,39 @@ def delete_task_id(id):
     response = requests.request("DELETE", url, params=queryparams)
     return response.text
 
-def create_task(statusId, taskName):
+def create_task(status_id, task_name):
     url = f"https://api.trello.com/1/cards"
-    queryparams = {"name": taskName, "idList": statusId, "key": key, "token": token}
-    jsonResponse = requests.request("POST", url, params=queryparams).json()
-    taskId = jsonResponse["id"]
+    queryparams = {"name": task_name, "idList": status_id, "key": key, "token": token}
+    json_response = requests.request("POST", url, params=queryparams).json()
+    taskId = json_response["id"]
     return taskId
 
-def move_task_status(statusId, taskId):
+def move_task_status(status_id, taskId):
     url = f"https://api.trello.com/1/cards/{taskId}"
-    queryparams= {"id": taskId, "idList": statusId, "key": key, "token": token}
-    jsonResponse = requests.request("PUT", url, params=queryparams).json()
-    taskId = jsonResponse["id"]
+    queryparams= {"id": taskId, "idList": status_id, "key": key, "token": token}
+    json_response = requests.request("PUT", url, params=queryparams).json()
+    taskId = json_response["id"]
     return taskId
 
-def create_status(boardId, statusName):
-    statuses = get_statuses(boardId)
+def create_status(board_id, status_name):
+    statuses = get_statuses(board_id)
     exists = False
     for status in statuses:
-        if (statusName == status['name']):
+        if (status_name == status['name']):
             exists = True
     if (exists == False):
-        url = f"https://api.trello.com/1/boards/{boardId}/lists"
-        queryparams = {"name": statusName, "key": key, "token": token}
-        jsonResponse = requests.request("POST", url, headers=headers, params=queryparams).json()
-        statusId = jsonResponse["id"]
-        return statusId
+        url = f"https://api.trello.com/1/boards/{board_id}/lists"
+        queryparams = {"name": status_name, "key": key, "token": token}
+        json_response = requests.request("POST", url, headers=headers, params=queryparams).json()
+        status_id = json_response["id"]
+        return status_id
 
 def create_board(boardName):
     url = "https://api.trello.com/1/boards/"
     queryparams = {"name": boardName, "key": key, "token": token}
-    jsonResponse = requests.request("POST", url, params=queryparams).json()
-    boardId = jsonResponse["shortUrl"].split("/")[-1].strip()
-    return boardId
+    json_response = requests.request("POST", url, params=queryparams).json()
+    board_id = json_response["shortUrl"].split("/")[-1].strip()
+    return board_id
 
 def delete_board_id(id):
     url = f"https://api.trello.com/1/boards/{id}"
@@ -110,48 +110,48 @@ def add_board():
 
 @app.route('/delete_board')
 def delete_board():
-    boardId = request.args.get('id')  
-    delete_board_id(boardId)
+    board_id = request.args.get('id')  
+    delete_board_id(board_id)
     return redirect(url_for('index'))
 
 @app.route('/add_status', methods=['GET', 'POST'])
 def add_status():    
     if request.method == 'POST':
-        boardId = request.form['board_id']
-        statusName = request.form['status_name']
-        create_status(boardId, statusName)
-        return redirect(url_for('view_board', id=boardId))
+        board_id = request.form['board_id']
+        status_name = request.form['status_name']
+        create_status(board_id, status_name)
+        return redirect(url_for('view_board', id=board_id))
     else:
-        boardId = request.args.get('board_id')
-        board = get_board(boardId)    
+        board_id = request.args.get('board_id')
+        board = get_board(board_id)    
         return render_template("add_status.html", board=board)
 
 
 @app.route('/add_task', methods=['GET', 'POST'])
 def add_task():    
     if request.method == 'POST':
-        taskName = request.form['task_name']
-        statusId = request.form['status_id']
-        boardId = request.form['board_id']         
-        create_task(statusId, taskName)
-        return redirect(url_for('view_board', id=boardId))
+        task_name = request.form['task_name']
+        status_id = request.form['status_id']
+        board_id = request.form['board_id']         
+        create_task(status_id, task_name)
+        return redirect(url_for('view_board', id=board_id))
     else:
-        boardId = request.args.get('board_id')
-        statuses = get_statuses(boardId)
-        return render_template("add_task.html", board_id=boardId, statuses=statuses)
+        board_id = request.args.get('board_id')
+        statuses = get_statuses(board_id)
+        return render_template("add_task.html", board_id=board_id, statuses=statuses)
 
 @app.route('/move_task', methods=['GET', 'POST'])
 def move_task():
     if request.method == 'POST':
         id = request.form['id']        
-        boardId = request.form['board_id'] 
-        statusId = request.form['status_id']                       
-        move_task_status(statusId, id)
-        return redirect(url_for('view_board', id=boardId))
+        board_id = request.form['board_id'] 
+        status_id = request.form['status_id']                       
+        move_task_status(status_id, id)
+        return redirect(url_for('view_board', id=board_id))
     else:
-        boardId = request.args.get('board_id')
+        board_id = request.args.get('board_id')
         taskId = request.args.get('task_id')
-        statuses = get_statuses(boardId)
+        statuses = get_statuses(board_id)
         task = get_task(taskId)        
         return render_template("move_task.html", task=task, statuses=statuses)
 
@@ -159,32 +159,32 @@ def move_task():
 @app.route('/delete_task')
 def delete_task():
     taskId = request.args.get('task_id')    
-    boardId = request.args.get('board_id')
+    board_id = request.args.get('board_id')
     delete_task_id(taskId)
-    return redirect(url_for('view_board', id=boardId))
+    return redirect(url_for('view_board', id=board_id))
 
 
 
 @app.route('/delete_status')
 def delete_status():
-    statusId = request.args.get('status_id')    
-    boardId = request.args.get('board_id')
-    delete_status_id(statusId)
-    return redirect(url_for('view_board', id=boardId))
+    status_id = request.args.get('status_id')    
+    board_id = request.args.get('board_id')
+    delete_status_id(status_id)
+    return redirect(url_for('view_board', id=board_id))
 
 
 @app.route('/view_board', methods=['GET', 'POST'])
 def view_board():
-    boardId = request.args.get('id')    
-    board = get_board(boardId)
-    statuses = get_statuses(boardId)
+    board_id = request.args.get('id')    
+    board = get_board(board_id)
+    statuses = get_statuses(board_id)
     tasks = []
     for status in statuses:
-        statusId = status['id']
-        statusName = status['name']
-        statusTasks = get_tasks(statusId)
-        for task in statusTasks:
-            tasks.append({'id': task['id'], 'name': task['name'], 's_id': statusId, 's_name': statusName})    
+        status_id = status['id']
+        status_name = status['name']
+        status_tasks = get_tasks(status_id)
+        for task in status_tasks:
+            tasks.append({'id': task['id'], 'name': task['name'], 's_id': status_id, 's_name': status_name})    
     return render_template("trello.html", board=board, statuses=statuses, tasks=tasks)
 
 @app.route('/', methods=['GET', 'POST'])
@@ -192,12 +192,12 @@ def index():
 
     url = "https://api.trello.com/1/members/me/boards"
     queryparams = {"key": key, "token": token}
-    urlResponse = requests.request("GET", url, params=queryparams)
-    responseString = [] 
-    jsonString = urlResponse.json()
-    for jsonRecord in jsonString:
-        responseString.append({'id': jsonRecord['id'], 'name': jsonRecord['name']}) 
-    return render_template("index.html", data=responseString)
+    url_response = requests.request("GET", url, params=queryparams)
+    response_string = [] 
+    json_string = url_response.json()
+    for json_record in json_string:
+        response_string.append({'id': json_record['id'], 'name': json_record['name']}) 
+    return render_template("index.html", data=response_string)
 
 if __name__ == '__main__':
     app.run()

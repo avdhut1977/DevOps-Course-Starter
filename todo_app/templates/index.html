@@ -2,6 +2,7 @@
 {% block title %}To-Do App{% endblock %}
 
 {% block content %}
+
 <div class="jumbotron">
   <h1 class="display-4">To-Do App</h1>
   <p class="lead">Just another to-do app.</p>
@@ -31,6 +32,7 @@
           <td> <a href="/view_board?id={{board['id']}}">View</a> | <a href="/delete_board?id={{board['id']}}">Delete</a>
           </td>
         </tr>
+
         {% endfor %}
 
       </Table>

@@ -6,6 +6,7 @@ from todo_app.Task import Task
 app = Flask(__name__)
 app.config.from_object(Config)
 
+
 key = Config.TRELLO_KEY
 token = Config.TRELLO_TOKEN
 

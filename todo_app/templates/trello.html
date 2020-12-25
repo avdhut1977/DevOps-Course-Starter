@@ -45,7 +45,7 @@
         {% for task in tasks %}
         <tr>
           <td> <a href="/view_task?id={{task['id']}}">{{task['name']}}</a></td>
-          <td> {{task['s_name']}}</td>
+          <td> {{task['status_name']}}</td>
           <td>
             <a href="/move_task?board_id={{board['id']}}&task_id={{task['id']}}">Move Task</a> |
             <a href="/delete_task?board_id={{board['id']}}&task_id={{task['id']}}">Delete Task</a>

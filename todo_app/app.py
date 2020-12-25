@@ -1,6 +1,7 @@
 import requests
 from flask import Flask,request,render_template, redirect,url_for
 from todo_app.flask_config import Config
+from todo_app.Task import Task
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -42,8 +43,9 @@ def get_task(id):
     url = f"https://api.trello.com/1/cards/{id}"
     queryparams = {"key": key, "token": token}
     json_response = requests.request("GET", url, params=queryparams).json()  
-    task = {'id': json_response['id'], 'name': json_response['name'], 'status_id': json_response['idList'], 'board_id':json_response['idBoard'] }
-    return task
+    task = Task(id=json_response['id'], status_id=json_response['idList'], name=json_response['name'], status_name='')
+    board_id = json_response['idBoard']
+    return task , board_id
 
 def delete_task_id(id):
     url = f"https://api.trello.com/1/cards/{id}"
@@ -152,8 +154,8 @@ def move_task():
         board_id = request.args.get('board_id')
         taskId = request.args.get('task_id')
         statuses = get_statuses(board_id)
-        task = get_task(taskId)        
-        return render_template("move_task.html", task=task, statuses=statuses)
+        task , board_id = get_task(taskId)        
+        return render_template("move_task.html", task=task, board_id=board_id , statuses=statuses)
 
 
 @app.route('/delete_task')
@@ -184,7 +186,7 @@ def view_board():
         status_name = status['name']
         status_tasks = get_tasks(status_id)
         for task in status_tasks:
-            tasks.append({'id': task['id'], 'name': task['name'], 's_id': status_id, 's_name': status_name})    
+            tasks.append(Task(id=task['id'], status_id=status_id, name=task['name'], status_name=status_name) ) 
     return render_template("trello.html", board=board, statuses=statuses, tasks=tasks)
 
 @app.route('/', methods=['GET', 'POST'])

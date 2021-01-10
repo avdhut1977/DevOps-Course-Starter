@@ -65,6 +65,6 @@ def test_adding_new_task(driver, test_app):
     input_field.send_keys("TestTask")
     add_item = driver.find_element_by_id('new_task')
     add_item.click()    
-    #sleep(60)
+
     page_source = driver.page_source 
     assert page_source.find("TestTask") >= 0

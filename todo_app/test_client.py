@@ -11,7 +11,7 @@ import datetime
 @pytest.fixture
 def client():
     # Use our test integration config instead of the 'real' version
-    file_path = dotenv.find_dotenv('todo_app/.env.test') 
+    file_path = dotenv.find_dotenv('.env.test') 
     dotenv.load_dotenv(file_path, override=True)    
     
     # Create the new app.     

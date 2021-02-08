@@ -8,7 +8,8 @@ from selenium.webdriver.common.keys import Keys
 import dotenv
 import requests
 from time import sleep
- 
+
+
 @pytest.fixture(scope='module')
 def test_app():
 

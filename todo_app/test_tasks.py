@@ -2,9 +2,13 @@ import pytest
 import todo_app.view_model as view_model
 import datetime
 import todo_app.Task as task
+
     
 @pytest.fixture
 def test_tasks():
+    '''
+        Test there are 2 To DO tasks , 3 Tasks with Status as Doing and 4 Done Tasks Today / 3 Tasks Done before today
+    '''
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days=1)
     task_list = [
@@ -27,7 +31,7 @@ def test_tasks():
     return test_list
 
 @pytest.fixture
-def test_tasks_2():
+def test_tasks_with_4_done():
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days= 1)
     task_list = [ 
@@ -46,7 +50,7 @@ def test_tasks_2():
     return test_list
 
 @pytest.fixture
-def test_tasks_3():
+def test_tasks_with_5_done():
     today = datetime.date.today()
     yesterday = today - datetime.timedelta(days= 1)
     task_list = [   
@@ -87,10 +91,10 @@ def test_show_all_tasks_more_than_5(test_tasks):
     show_all = test_tasks.show_all_done_tasks
     assert len(show_all) == 4
 
-def test_show_all_tasks_less_than_5(test_tasks_2):
-    show_all = test_tasks_2.show_all_done_tasks
+def test_show_all_tasks_less_than_5(test_tasks_with_4_done):
+    show_all = test_tasks_with_4_done.show_all_done_tasks
     assert len(show_all) == 4
 
-def test_show_all_tasks_equal_to_5(test_tasks_3):
-    show_all = test_tasks_3.show_all_done_tasks
+def test_show_all_tasks_equal_to_5(test_tasks_with_5_done):
+    show_all = test_tasks_with_5_done.show_all_done_tasks
     assert len(show_all) == 5

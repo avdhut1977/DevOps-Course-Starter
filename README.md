@@ -3,7 +3,7 @@
 ## Getting started
 The project uses a virtual environment to isolate package dependencies. To create the virtual environment and install required packages, run the following from a bash shell terminal:
 
-##On Windows
+### On Windows
 pip install -r requirements.txt
 
 Setup the below Environment variables for Trello API

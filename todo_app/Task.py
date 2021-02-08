@@ -1,8 +1,12 @@
+import dateutil.parser
+
 class Task:
-    def __init__(self, id, status_id, name, status_name):
+    def __init__(self, id, status, title, last_modified):
         self.id = id
-        self.status_id = status_id
-        self.name = name
-        self.status_name = status_name
+        self.title = title
+        self.status = status
+        self.last_modified = dateutil.parser.parse(last_modified)
         
+        
+
         

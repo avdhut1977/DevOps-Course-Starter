@@ -118,4 +118,3 @@ env/
 
 ### Configuration files ###
 .env
-chromedriver.exe

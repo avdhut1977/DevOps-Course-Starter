@@ -1,5 +1,25 @@
 # DevOps Apprenticeship: Project Exercise
 
+## Getting started
+The project uses a virtual environment to isolate package dependencies. To create the virtual environment and install required packages, run the following from a bash shell terminal:
+
+##On Windows
+pip install -r requirements.txt
+
+Setup the below Environment variables for Trello API
+
+TRELLO_KEY
+
+TRELLO_TOKEN
+
+TRELLO_BOARD
+
+TRELLO_TODO_LIST_ID
+
+TRELLO_DOING_LIST_ID
+
+TRELLO_DONE_LIST_ID
+
 ## System Requirements
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):

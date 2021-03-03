@@ -4,7 +4,6 @@
 The project uses a virtual environment to isolate package dependencies. To create the virtual environment and install required packages, run the following from a bash shell terminal:
 
 ### On Windows
-pip install -r requirements.txt
 
 Setup the below Environment variables for Trello API
 
@@ -19,6 +18,14 @@ TRELLO_TODO_LIST_ID
 TRELLO_DOING_LIST_ID
 
 TRELLO_DONE_LIST_ID
+
+
+## Running the App on VM
+
+```bash
+vagrant up
+```
+
 
 ## System Requirements
 

@@ -1,6 +1,5 @@
 # Ignore files from the docker context
 **/__pycache__
-**/.coverage
 **/tests
 **/.coverage
 **/.git

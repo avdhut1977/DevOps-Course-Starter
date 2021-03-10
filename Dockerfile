@@ -11,5 +11,6 @@ ENTRYPOINT poetry run flask run -h 0.0.0.0 -p 5000
 
 FROM base as production
 ENV FLASK_ENV=production
+COPY . /app/
 ENTRYPOINT poetry run gunicorn --bind 0.0.0.0:5000 todo_app.wsgi:app
 

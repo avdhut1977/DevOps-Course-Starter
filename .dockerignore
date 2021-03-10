@@ -8,6 +8,7 @@
 .vagrant
 .vscode
 Dockerfile
+Vagrantfile
 chromedriver.exe
 poetry.lock
 *.log

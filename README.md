@@ -31,20 +31,20 @@ vagrant up
 To build the docker image run the following command
 
 ```
-docker build --target development --tag todo-app:development .
-docker build --target production --tag todo-app:production .
+docker build --target development --tag todo-app:dev .
+docker build --target production --tag todo-app:prod .
 ```
 
 ### Running the container
 
 To run the production container as a daemon run following command
 ```
-docker run -p 5000:5000 --env-file .env -d todo-app:production
+docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app/ todo-app:prod
 ```
 
 To run the development container as a daemon ensure you mount the project directory within the container e.g. run following command
 ```
-docker run -p 5000:5000 --env-file .env --mount type=bind,source=$(pwd),target=/code/todo_app/app -d todo-app:development
+docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app/ todo-app:dev
 ```
 
 ## System Requirements

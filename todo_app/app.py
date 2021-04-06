@@ -10,6 +10,7 @@ headers = {
    "Accept": "application/json"
 }
 
+
 @app.route('/', methods=['Get'])
 def index():
     tasks = trello.get_all_tasks()        
@@ -37,10 +38,10 @@ def delete_task(task_id):
     return redirect('/')
 
 if __name__ == '__main__':
-    app.run()  
+        #app.run()  
+    app.run(host='0.0.0.0', port=5000)  
 
-
-
+   
 
 
 

@@ -33,6 +33,7 @@ To build the docker image run the following command
 ```
 docker build --target development --tag todo-app:dev .
 docker build --target production --tag todo-app:prod .
+docker build --target test --tag my-test-image .
 ```
 
 ### Running the container
@@ -46,7 +47,10 @@ To run the development container as a daemon ensure you mount the project direct
 ```
 docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app/ todo-app:dev
 ```
-
+To run the test container as a daemon ensure you mount the project directory within the container e.g. run following command
+```
+docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app/ my-test-image
+```
 ## System Requirements
 
 The project uses poetry for Python to create an isolated environment and manage package dependencies. To prepare your system, ensure you have an official distribution of Python version 3.7+ and install poetry using one of the following commands (as instructed by the [poetry documentation](https://python-poetry.org/docs/#system-requirements)):

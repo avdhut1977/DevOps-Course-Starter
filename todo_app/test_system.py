@@ -5,9 +5,12 @@ from todo_app.trello import create_board, delete_board
 from threading import Thread
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
 import dotenv
 import requests
 from time import sleep
+from webdriver_manager.chrome import ChromeDriverManager #newly added to resolve hard coding
+
 
 
 @pytest.fixture(scope='module')
@@ -52,17 +55,24 @@ def test_app():
 
 
 @pytest.fixture(scope="module")
-def driver():     
-    with webdriver.Chrome() as driver:
-        yield driver 
+#def driver():     
+#    with webdriver.Chrome() as driver:
+#        yield driver 
+def driver():
+    opts = Options()
+    opts.add_argument('--headless')
+    opts.add_argument('--no-sandbox')
+    opts.add_argument('--disable-dev-shm-usage')
+    with webdriver.Chrome(ChromeDriverManager().install(), options=opts) as driver: #newly added
+    #with Chrome() as driver:
+        yield driver       
 
-def test_adding_new_task(driver, test_app):
+
+def test_adding_new_task(driver, test_app):    
     driver.get('http://localhost:5000/')  
-        
     input_field = driver.find_element_by_id('title')
-    input_field.send_keys("TestTask")
-    add_item = driver.find_element_by_id('new_task')
-    add_item.click()    
-
-    page_source = driver.page_source 
-    assert page_source.find("TestTask") >= 0
+    input_field.send_keys("TestItem")
+    add_task = driver.find_element_by_id('new_task')
+    add_task.click()    
+    page_source = driver.page_source    
+    assert "TestItem" in page_source   

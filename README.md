@@ -49,7 +49,7 @@ docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo
 ```
 To run the test container as a daemon ensure you mount the project directory within the container e.g. run following command
 ```
-docker run --env-file ./.env -p 5000:5000 --mount type=bind,source="$(pwd)"/todo_app,target=/app/todo_app/ my-test-image
+docker run --env-file ./.env -p 5000:5000  my-test-image
 ```
 ## System Requirements
 

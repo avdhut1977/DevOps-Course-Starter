@@ -66,12 +66,14 @@ def delete_task(id):
     requests.delete("https://api.trello.com/1/cards/" + id, params=params)
 
 def create_board():
+
     params = (
         ('key', os.environ['TRELLO_KEY']),
         ('token', os.environ['TRELLO_TOKEN']),
         ('name', 'TestBoard1')
     )
     response = requests.post("https://api.trello.com/1/boards/", params=params)
+    print(response.json())
     return response.json()['id']
 
 def delete_board(id):

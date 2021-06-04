@@ -13,7 +13,6 @@ ENTRYPOINT poetry run flask run -h 0.0.0.0 -p 5000
 FROM base as production
 ENV FLASK_ENV=production
 ENV PORT=5000
-#COPY . /app
 COPY run.sh /app
 COPY ./todo_app /app/todo_app
 RUN chmod 777 run.sh

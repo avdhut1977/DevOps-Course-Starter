@@ -13,8 +13,12 @@ ENTRYPOINT poetry run flask run -h 0.0.0.0 -p 5000
 FROM base as production
 ENV FLASK_ENV=production
 ENV PORT=5000
-COPY . /app/
-ENTRYPOINT poetry run gunicorn --bind 0.0.0.0:5000 todo_app.wsgi:app
+COPY . /app
+COPY run.sh /app
+COPY ./todo_app /app/todo_app
+RUN chmod 777 run.sh
+ENTRYPOINT run.sh
+
 
 FROM base as test
 #Install chrome

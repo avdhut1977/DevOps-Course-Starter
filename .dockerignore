@@ -10,6 +10,7 @@
 Dockerfile
 Vagrantfile
 chromedriver.exe
-poetry.lock
 *.log
 *.env*
+.venv/
+.dockerginore

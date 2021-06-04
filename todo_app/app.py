@@ -12,6 +12,8 @@ headers = {
 
 def create_app():
     app = Flask(__name__)
+    
+
     @app.route('/', methods=['Get'])
     def index():
         tasks = trello.get_all_tasks()        
@@ -38,11 +40,11 @@ def create_app():
         trello.delete_task(task_id)
         return redirect('/')
 
-    if __name__ == '__main__':
-            #app.run()  
-        app.run(host='0.0.0.0', port=5000)  
-
     return app    
+
+if __name__ == '__main__':
+    app = create_app()
+    app.run()   
 
    
 

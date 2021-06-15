@@ -15,7 +15,7 @@ ENV FLASK_ENV=production
 ENV PORT=5000
 COPY run.sh /app
 COPY ./todo_app /app/todo_app
-RUN chmod 777 run.sh
+RUN chmod +x run.sh
 ENTRYPOINT ./run.sh
 
 

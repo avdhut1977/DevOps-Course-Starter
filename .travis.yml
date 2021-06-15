@@ -3,7 +3,7 @@ services:
 
 before_script:
   - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD   #login to dockerhub
-  - curl https://cli-assets.heroku.com/install.sh | sh  #install heroku
+
   - docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com 
 
 script:

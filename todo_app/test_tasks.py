@@ -9,7 +9,7 @@ def test_tasks():
     '''
         Test there are 2 To DO tasks , 3 Tasks with Status as Doing and 4 Done Tasks Today / 3 Tasks Done before today
     '''
-    today = datetime.date.today()
+    today = datetime.date.utcnow()
     yesterday = today - datetime.timedelta(days=1)
     task_list = [
         task.Task(1, 'To Do', 'Task1', str(today)),
@@ -32,7 +32,7 @@ def test_tasks():
 
 @pytest.fixture
 def test_tasks_with_4_done():
-    today = datetime.date.today()
+    today = datetime.date.utcnow()
     yesterday = today - datetime.timedelta(days= 1)
     task_list = [ 
         task.Task(1, 'To Do', 'Task1', str(today)),
@@ -51,7 +51,7 @@ def test_tasks_with_4_done():
 
 @pytest.fixture
 def test_tasks_with_5_done():
-    today = datetime.date.today()
+    today = datetime.date.utcnow()
     yesterday = today - datetime.timedelta(days= 1)
     task_list = [   
         task.Task(1, 'Doing', 'Task1', str(today)),

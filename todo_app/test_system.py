@@ -17,8 +17,8 @@ from todo_app.mongo_db_tasks import TasksDb
 @pytest.fixture(scope='module')
 def test_app():
 
-    #file_path = dotenv.find_dotenv('.env') 
-    #dotenv.load_dotenv(file_path, override=True)      
+    file_path = dotenv.find_dotenv('.env') 
+    dotenv.load_dotenv(file_path, override=True)      
     
     db = TasksDb()
 

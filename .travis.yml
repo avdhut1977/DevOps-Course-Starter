@@ -10,7 +10,7 @@ script:
   - docker build --target test --tag my-test-image .
   - docker run my-test-image todo_app/test_tasks.py
   - docker run my-test-image todo_app/test_client.py
-  - docker run -e MONGO_DB_URL=$MONGO_DB_URL  my-test-image todo_app/test_tasks.py
+  - docker run -e MONGO_DB_URL=$MONGO_DB_URL  my-test-image todo_app/test_system.py
   - docker build --target production --tag $DOCKER_USER/todo-app:latest .  
   - docker push $DOCKER_USER/todo-app:latest
   - docker tag $DOCKER_USER/todo-app:latest registry.heroku.com/$HEROKU_APP/web

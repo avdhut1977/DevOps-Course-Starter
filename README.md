@@ -89,6 +89,18 @@ The `.env` file is used by flask to set environment variables when running `flas
 https://trello-to-do-app.herokuapp.com/
 
 ```
+
+### Database setup
+Setup below environment variable for Database connections
+```
+MONGO_DB_URL ( required)
+MONGO_DB_NAME (optional)
+ITEMS_TABLE_NAME (optional)
+
+Default values
+MONGO_DB_NAME=Board
+ITEMS_TABLE_NAME=Items
+```
 ## Running the App
 
 Once the all dependencies have been installed, start the Flask app in development mode within the poetry environment by running:

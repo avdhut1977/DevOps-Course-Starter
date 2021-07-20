@@ -3,7 +3,6 @@ import requests
 from flask import Flask, render_template, request, session, redirect, url_for
 import todo_app.view_model as view_model
 from todo_app.Task import Task
-import todo_app.trello as trello
 from todo_app.mongo_db_tasks import TasksDb
 
 app = Flask(__name__)

@@ -12,15 +12,11 @@ import datetime
 class TasksDb:
 
     def get_db_name(self):  
-        db_name = os.getenv('MONGO_DB_NAME') 
-        if db_name is None:
-            db_name = "Board"
+        db_name = os.getenv('MONGO_DB_NAME', 'Board')
         return db_name
 
     def get_tasks_db_tablename(self):  
-        tasks_table_name = os.getenv('ITEMS_TABLE_NAME') 
-        if tasks_table_name is None:
-            tasks_table_name = "Tasks"
+        tasks_table_name = os.getenv('ITEMS_TABLE_NAME', "Tasks") 
         return tasks_table_name
 
     def get_board_db(self):
@@ -110,7 +106,6 @@ def get_board_db():
     db_url = os.getenv('MONGO_DB_URL')
     if db_url is None:
         raise Exception("Environment variable MONGO_DB_URL is not set")
-    print(f"Database URL: {db_url}")
     db_name = get_db_name()    
     client = MongoClient(db_url)
     db = client[db_name]
